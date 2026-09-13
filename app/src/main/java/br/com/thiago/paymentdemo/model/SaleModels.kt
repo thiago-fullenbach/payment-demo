@@ -9,8 +9,8 @@ data class Sale(
 
 enum class SaleState {
     PENDING,
-    APPROVED,
-    DECLINED,
+    CONFIRMED,
+    FAILED,
     UNKNOWN
 }
 

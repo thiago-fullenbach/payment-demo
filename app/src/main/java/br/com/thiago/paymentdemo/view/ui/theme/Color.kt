@@ -1,4 +1,4 @@
-package br.com.thiago.paymentdemo.ui.theme
+package br.com.thiago.paymentdemo.view.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
