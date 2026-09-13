@@ -5,7 +5,16 @@ data class Sale(
     val amountCents: Long,
     val idempotencyKey: String,
     val state: SaleState = SaleState.PENDING,
-)
+) {
+    companion object {
+        fun brandNewSale(id: String, amountCents: Long, idempotencyKey: String): Sale =
+            Sale(
+                id = id,
+                amountCents = amountCents,
+                idempotencyKey = idempotencyKey
+            )
+    }
+}
 
 enum class SaleState {
     PENDING,

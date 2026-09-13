@@ -4,7 +4,7 @@ import br.com.thiago.paymentdemo.model.PaymentResult
 import kotlinx.coroutines.delay
 
 interface Acquirer {
-    suspend fun send(idempotencyKey: String, amountCents: Long): PaymentResult
+    suspend fun send(amountCents: Long, idempotencyKey: String): PaymentResult
     suspend fun status(idempotencyKey: String): PaymentResult?
 }
 
@@ -13,7 +13,7 @@ class FakeAcquirer: Acquirer {
     private val delaySend: Long = 1_500
     private val delayStatus: Long = 100
 
-    override suspend fun send(idempotencyKey: String, amountCents: Long): PaymentResult {
+    override suspend fun send(amountCents: Long, idempotencyKey: String): PaymentResult {
         val paymentState = salesMap[idempotencyKey]
         if (paymentState != null)
             return paymentState
