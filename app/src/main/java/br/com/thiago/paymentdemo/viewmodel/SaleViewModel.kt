@@ -2,7 +2,10 @@ package br.com.thiago.paymentdemo.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import br.com.thiago.paymentdemo.Acquirer
+import br.com.thiago.paymentdemo.FakeAcquirer
 import br.com.thiago.paymentdemo.model.Sale
 import br.com.thiago.paymentdemo.model.SaleState
 import br.com.thiago.paymentdemo.utils.UuidUtils
@@ -42,6 +45,12 @@ class SaleViewModel(private val acquirer: Acquirer) : ViewModel() {
             _sales.update { sales ->
                 sales.updateState(sale.idempotencyKey, newState)
             }
+        }
+    }
+
+    companion object {
+        val Factory = viewModelFactory {
+            initializer { SaleViewModel(FakeAcquirer()) }
         }
     }
 }
