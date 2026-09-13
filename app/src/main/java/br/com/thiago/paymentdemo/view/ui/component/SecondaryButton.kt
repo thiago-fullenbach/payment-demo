@@ -1,10 +1,8 @@
 package br.com.thiago.paymentdemo.view.ui.component
 
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,7 +19,6 @@ fun SecondaryButton(
 ) {
     OutlinedButton(
         modifier = modifier
-            .fillMaxWidth()
             .heightIn(min = 52.dp),
         shape = RoundedCornerShape(6.dp),
         onClick = onClick,

@@ -1,7 +1,6 @@
 package br.com.thiago.paymentdemo.view.ui.component
 
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -20,7 +19,6 @@ fun PrimaryButton(
 ) {
     Button(
         modifier = modifier
-            .fillMaxWidth()
             .heightIn(min = 52.dp),
         shape = RoundedCornerShape(6.dp),
         onClick = onClick,

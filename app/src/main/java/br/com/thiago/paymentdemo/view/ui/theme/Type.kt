@@ -21,5 +21,15 @@ val AmountDisplay = TextStyle(
     fontWeight = FontWeight.SemiBold,
     letterSpacing = (-0.02).em,
 )
+
 val AmountRow = TextStyle(fontFamily = FontFamily.Monospace, fontSize = 17.sp, fontWeight = FontWeight.Medium)
+
 val KeyLabel  = TextStyle(fontFamily = FontFamily.Monospace, fontSize = 11.sp)
+
+val DigitKey = TextStyle(
+    fontFamily = FontFamily.Monospace,
+    fontSize = 20.sp,
+    fontWeight = FontWeight.Medium
+)
+
+val FunctionKey = TextStyle(fontSize = 15.sp)
