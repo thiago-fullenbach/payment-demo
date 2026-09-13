@@ -4,31 +4,22 @@ import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 
-// Set of Material typography styles to start with
 val Typography = Typography(
-    bodyLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
-    )
-    /* Other default text styles to override
-    titleLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
-        letterSpacing = 0.sp
-    ),
-    labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
-    )
-    */
+    headlineSmall = TextStyle(fontSize = 19.sp, fontWeight = FontWeight.SemiBold),
+    titleMedium   = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.SemiBold),
+    bodyMedium    = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.SemiBold),
+    bodySmall     = TextStyle(fontSize = 13.sp, fontWeight = FontWeight.Medium),
+    labelSmall    = TextStyle(fontSize = 12.sp),
 )
+
+val AmountDisplay = TextStyle(
+    fontFamily = FontFamily.Monospace,
+    fontSize = 38.sp,
+    fontWeight = FontWeight.SemiBold,
+    letterSpacing = (-0.02).em,
+)
+val AmountRow = TextStyle(fontFamily = FontFamily.Monospace, fontSize = 17.sp, fontWeight = FontWeight.Medium)
+val KeyLabel  = TextStyle(fontFamily = FontFamily.Monospace, fontSize = 11.sp)
