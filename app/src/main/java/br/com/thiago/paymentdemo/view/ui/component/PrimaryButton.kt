@@ -15,6 +15,7 @@ import br.com.thiago.paymentdemo.view.ui.theme.PaymentDemoTheme
 fun PrimaryButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
+    enabled: Boolean = true,
     content: @Composable RowScope.() -> Unit
 ) {
     Button(
@@ -22,6 +23,7 @@ fun PrimaryButton(
             .heightIn(min = 52.dp),
         shape = RoundedCornerShape(6.dp),
         onClick = onClick,
+        enabled = enabled
     ) {
         content()
     }

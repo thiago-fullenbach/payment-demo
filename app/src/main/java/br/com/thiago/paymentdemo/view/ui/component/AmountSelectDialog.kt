@@ -44,7 +44,11 @@ fun AmountSelectDialog(
                         Text("Cancelar")
                     }
                     Spacer(Modifier.width(s2))
-                    PrimaryButton(modifier = Modifier.weight(1f), onClick = { onConfirm(cents); onDismiss() }) {
+                    PrimaryButton(
+                        modifier = Modifier.weight(1f),
+                        onClick = { onConfirm(cents); onDismiss() },
+                        enabled = cents > 0
+                    ) {
                         Text("Cobrar")
                     }
                 }

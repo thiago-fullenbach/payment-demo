@@ -12,7 +12,9 @@ import br.com.thiago.paymentdemo.utils.UuidUtils
 import br.com.thiago.paymentdemo.utils.toSaleState
 import br.com.thiago.paymentdemo.utils.updateState
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -20,6 +22,9 @@ import kotlinx.coroutines.launch
 class SaleViewModel(private val acquirer: Acquirer) : ViewModel() {
     private val _sales = MutableStateFlow<List<Sale>>(emptyList())
     val sales = _sales.asStateFlow()
+
+    private val _events = MutableSharedFlow<SaleEvent>(extraBufferCapacity = 1)
+    val events = _events.asSharedFlow()
 
     fun onIntent(intent: SaleIntent) {
         when (intent) {
@@ -33,7 +38,8 @@ class SaleViewModel(private val acquirer: Acquirer) : ViewModel() {
             amountCents = amountCents,
             idempotencyKey = UuidUtils.generateRandomUuidStr()
         )
-        _sales.update { sales -> sales + sale }
+        _sales.update { sales -> listOf(sale) + sales }
+        _events.tryEmit(SaleEvent.Created(sale.amountCents))
         viewModelScope.launch {
             val newState = try {
                 acquirer.send(sale.amountCents, sale.idempotencyKey).toSaleState()
