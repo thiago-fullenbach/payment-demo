@@ -17,6 +17,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.thiago.paymentdemo.view.ui.component.AmountSelectDialog
@@ -65,7 +66,8 @@ fun SaleScreen(viewModel: SaleViewModel = viewModel(factory = SaleViewModel.Fact
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "Sem Vendas",
+                text = "Nenhuma venda ainda. Toque em Vender para começar.",
+                textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

@@ -19,7 +19,7 @@ data class Sale(
 enum class SaleState {
     PENDING,
     CONFIRMED,
-    FAILED,
+    DECLINED,
     UNKNOWN
 }
 

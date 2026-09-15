@@ -6,7 +6,7 @@ import br.com.thiago.paymentdemo.model.SaleState
 
 fun PaymentResult.toSaleState(): SaleState = when (this) {
     PaymentResult.Approved -> SaleState.CONFIRMED
-    PaymentResult.Declined -> SaleState.FAILED
+    PaymentResult.Declined -> SaleState.DECLINED
     PaymentResult.NoAnswer -> SaleState.UNKNOWN
 }
 
