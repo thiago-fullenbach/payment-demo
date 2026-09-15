@@ -1,6 +1,5 @@
 package br.com.thiago.paymentdemo.view.ui.screen
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,13 +14,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.thiago.paymentdemo.view.ui.component.AmountSelectDialog
 import br.com.thiago.paymentdemo.view.ui.component.PrimaryButton
+import br.com.thiago.paymentdemo.view.ui.component.SaleList
 import br.com.thiago.paymentdemo.view.ui.component.SecondaryButton
 import br.com.thiago.paymentdemo.view.ui.theme.PaymentDemoTheme
 import br.com.thiago.paymentdemo.view.ui.theme.s1
@@ -42,9 +40,11 @@ fun SaleScreen(viewModel: SaleViewModel = viewModel(factory = SaleViewModel.Fact
         )
     }
 
-    Column(modifier = Modifier
-        .safeDrawingPadding()
-        .fillMaxSize()) {
+    Column(
+        modifier = Modifier
+            .safeDrawingPadding()
+            .fillMaxSize()
+    ) {
         Column(
             modifier = Modifier
                 .padding(s4)
@@ -58,20 +58,9 @@ fun SaleScreen(viewModel: SaleViewModel = viewModel(factory = SaleViewModel.Fact
             )
         }
 
-        // TODO: Extract component and add LazyColumn with values
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = "Nenhuma venda ainda. Toque em Vender para começar.",
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
+        SaleList(modifier = Modifier
+            .fillMaxWidth()
+            .weight(1f), sales = emptyList())
 
         Column(modifier = Modifier.padding(s4)) {
             PrimaryButton(modifier = Modifier.fillMaxWidth(), onClick = { showDialog = true }) {
