@@ -15,6 +15,7 @@ import br.com.thiago.paymentdemo.view.ui.theme.PaymentDemoTheme
 fun SecondaryButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
+    enabled: Boolean = true,
     content: @Composable RowScope.() -> Unit
 ) {
     OutlinedButton(
@@ -22,6 +23,7 @@ fun SecondaryButton(
             .heightIn(min = 52.dp),
         shape = RoundedCornerShape(6.dp),
         onClick = onClick,
+        enabled = enabled
     ) {
         content()
     }

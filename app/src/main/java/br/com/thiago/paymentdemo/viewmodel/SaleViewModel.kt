@@ -29,6 +29,7 @@ class SaleViewModel(private val acquirer: Acquirer) : ViewModel() {
     fun onIntent(intent: SaleIntent) {
         when (intent) {
             is SaleIntent.NewSale -> sell(intent.amountCents)
+            is SaleIntent.VerifyUnknown -> verify()
         }
     }
 
@@ -51,6 +52,19 @@ class SaleViewModel(private val acquirer: Acquirer) : ViewModel() {
             _sales.update { sales ->
                 sales.updateState(sale.idempotencyKey, newState)
             }
+        }
+    }
+
+    private fun verify() {
+        viewModelScope.launch {
+            val pending = _sales.value.filter { it.state == SaleState.UNKNOWN }
+            _events.emit(SaleEvent.Verify())
+            pending.forEach { sale ->
+                val result = acquirer.status(sale.idempotencyKey)
+                val newState = result?.toSaleState() ?: SaleState.DECLINED
+                _sales.update { it.updateState(sale.idempotencyKey, newState) }
+            }
+            _events.emit(SaleEvent.Verified(pending.size))
         }
     }
 

@@ -13,6 +13,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import br.com.thiago.paymentdemo.model.SaleState
 import br.com.thiago.paymentdemo.utils.toBrl
 import br.com.thiago.paymentdemo.view.ui.component.AmountSelectDialog
 import br.com.thiago.paymentdemo.view.ui.component.PrimaryButton
@@ -39,12 +41,15 @@ import br.com.thiago.paymentdemo.viewmodel.SaleViewModel
 fun SaleScreen(viewModel: SaleViewModel = viewModel(factory = SaleViewModel.Factory)) {
     var showDialog by rememberSaveable { mutableStateOf(false) }
     val sales by viewModel.sales.collectAsStateWithLifecycle()
+    val hasUnknown by remember { derivedStateOf { sales.any { it.state == SaleState.UNKNOWN } } }
     val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(Unit) {
         viewModel.events.collect { event ->
             val message = when (event) {
                 is SaleEvent.Created -> "Venda de ${event.amountCents.toBrl()} enviada"
+                is SaleEvent.Verify -> "Realizando verificação de status"
+                is SaleEvent.Verified -> "Verificou ${event.pendingCount} venda(s)"
             }
             snackbarHostState.showSnackbar(message)
         }
@@ -78,16 +83,22 @@ fun SaleScreen(viewModel: SaleViewModel = viewModel(factory = SaleViewModel.Fact
                 )
             }
 
-            SaleList(modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f), sales = sales)
+            SaleList(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f), sales = sales
+            )
 
             Column(modifier = Modifier.padding(s4)) {
                 PrimaryButton(modifier = Modifier.fillMaxWidth(), onClick = { showDialog = true }) {
                     Text("Vender", style = MaterialTheme.typography.titleMedium)
                 }
                 Spacer(Modifier.height(s2))
-                SecondaryButton(modifier = Modifier.fillMaxWidth(), onClick = {}) {
+                SecondaryButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = { viewModel.onIntent(SaleIntent.VerifyUnknown()) },
+                    enabled = hasUnknown
+                ) {
                     Text("Verificar Pendentes", style = MaterialTheme.typography.titleMedium)
                 }
             }
